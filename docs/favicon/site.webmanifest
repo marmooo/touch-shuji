@@ -1,6 +1,6 @@
 {
-    "name": "\u30bf\u30c3\u30c1\u7fd2\u5b57\u30c9\u30ea\u30eb",
-    "short_name": "\u30bf\u30c3\u30c1\u7fd2\u5b57\u30c9\u30ea\u30eb",
+    "name": "タッチ習字ドリル",
+    "short_name": "タッチ習字ドリル",
     "icons": [
         {
             "src": "/touch-shuji/favicon/android-chrome-192x192.png",
