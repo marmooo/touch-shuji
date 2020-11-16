@@ -140,14 +140,15 @@ const alphabets = "abcefghijklmnopqrstuvwxyz".split("");
 function getKakuPaths(contentDocument, kanjiId, pos) {
   var id = 'z' + kanjiId + 'd' + pos;
   var paths = contentDocument.querySelectorAll('[id="' + id + '"]');
-  if (paths) {
+  if (paths.length != 0) {
     return [...paths];
   } else {
     var paths = [];
     for (var i=0; i<alphabets.length; i++) {
       var path = contentDocument.querySelectorAll('[id="' + id + alphabets[i] + '"]');
-      paths.push(path);
+      paths.push(...path);
     }
+    return paths;
   }
 }
 
