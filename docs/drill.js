@@ -50,7 +50,7 @@ function changeAllColor(object,kanjiId,color){var id='z'+kanjiId+'d';var paths=o
 function changePathColor(pos,object,kanjiId,color){removeAnimations(object);var paths=getKakuPaths(object.contentDocument,kanjiId,pos);paths.forEach(path=>{path.style.fill=color;});}
 function countNoTransparent(data){var count=0;for(var i=3;i<data.length;i+=4){if(data[i]!=0){count+=1;}}
 return count;}
-function getInclusionCount(tegakiImgData,tehonImgData){for(var i=0;i<tegakiImgData.length;i++){if(tehonImgData[i]!=0){tegakiImgData[i]=0;}}
+function getInclusionCount(tegakiImgData,tehonImgData){for(var i=3;i<tegakiImgData.length;i+=4){if(tehonImgData[i]!=0){tegakiImgData[i]=0;}}
 var inclusionCount=countNoTransparent(tegakiImgData);return inclusionCount;}
 function calcKakuScore(tegakiCount,tehonCount,inclusionCount){var lineScore=(1-Math.abs((tehonCount-tegakiCount)/tehonCount))*1.1;if(lineScore>1){lineScore=1;}
 var inclusionScore=(tegakiCount-inclusionCount)/tegakiCount*2;if(inclusionScore>1){inclusionScore=1;}
