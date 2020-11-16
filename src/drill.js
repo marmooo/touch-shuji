@@ -20,7 +20,7 @@ const animCJKDir = '/animCJK'
 let prevCanvasSize;
 let canvasSize = 140;
 let maxWidth = 4;
-if (document.body.offsetWidth > 720) {
+if (window.innerWidth > 768) {
   canvasSize = 280;
   maxWidth = 8;
 }
@@ -103,7 +103,7 @@ customElements.define('tegaki-box', class extends HTMLElement {
   constructor() {
     super();
     const template = document.getElementById('tegaki-box').content.cloneNode(true);
-    if (document.body.offsetWidth > 720) {
+    if (window.innerWidth > 768) {
       var canvas = template.querySelector('canvas');
       canvas.setAttribute('width', canvasSize);
       canvas.setAttribute('height', canvasSize);
@@ -452,7 +452,7 @@ function loadDrill(drill) {
   });
   window.onresize = function() {
     prevCanvasSize = canvasSize;
-    if (document.body.offsetWidth > 720) {
+    if (window.innerWidth >= 768) {
       canvasSize = 280;
     } else {
       canvasSize = 140;
@@ -465,7 +465,7 @@ function loadDrill(drill) {
 
 // 器用差の大きい低学年の採点が緩くなるよう太さを変える
 function setStrokeWidth(kakusu) {
-  if (document.body.offsetWidth > 720) {
+  if (window.innerWidth > 768) {
     return 20 + 12 / kakusu;
   } else {
     return 10 + 6 / kakusu;
