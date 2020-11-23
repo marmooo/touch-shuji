@@ -215,16 +215,6 @@ function fetchKanjiSVG(kanji, kanjiId) {
   });
 }
 
-function setSVGTemplate(width, height) {
-  var object = document.createElement('object');
-  object.setAttribute('type', 'image/svg+xml');
-  object.setAttribute('width', width);
-  object.setAttribute('height', height);
-  object.style.display = 'block';
-  return object;
-}
-let kanjiTemplate = setSVGTemplate(canvasSize, canvasSize);
-
 function toKanjiId(str) {
   var oct = str.codePointAt(0).toString(10);
   return ('00000' + oct).slice(-5);
@@ -238,6 +228,7 @@ function loadSVG(kanji, kanjiId, parentNode, pos, loadCanvas) {
     box = document.createElement('tehon-box');
   }
   var object = box.shadowRoot.querySelector('object');
+  object.setAttribute('alt', kanji);
   object.setAttribute('data', animCJKDir + '/' + getKanjiDir(kanji, kanjiId) + '/' + kanjiId + '.svg');
   object.setAttribute('data-id', kanjiId);
   object.setAttribute('data-pos', pos);
