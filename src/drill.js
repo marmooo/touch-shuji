@@ -574,15 +574,13 @@ function getKakuScores(tegakiData, object, kanjiId, kakusu) {
         });
         markerPad.fromData([tegakiData[i]]);
         var kakuData = markerContext.getImageData(0, 0, canvasSize, canvasSize).data;
-        var tegakiCount = countNoTransparent(kakuData);
-        var tegakiDatum = tegakiData[i];
+        var kakuCount = countNoTransparent(kakuData);
         getTehonCanvas(object, kanjiId, kakusu, i+1).then(tehonCanvas => {
           var tehonImgData = tehonCanvas.getContext('2d').getImageData(0, 0, canvasSize, canvasSize).data;
           var tehonCount = countNoTransparent(tehonImgData);
 
-          var tegakiImgData = markerContext.getImageData(0, 0, canvasSize, canvasSize);
-          var inclusionCount = getInclusionCount(tegakiImgData, tehonImgData);
-          var kakuScore = calcKakuScore(tegakiCount, tehonCount, inclusionCount);
+          var inclusionCount = getInclusionCount(kakuData, tehonImgData);
+          var kakuScore = calcKakuScore(kakuCount, tehonCount, inclusionCount);
           resolve([kakuScore, tehonCount]);
         });
       } else {
