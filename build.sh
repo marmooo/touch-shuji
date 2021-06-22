@@ -1,3 +1,4 @@
+cp -r graded-kanji-examples/dist/* src/data
 dir=docs
 cp -r src/* $dir
 minify src/index.html > $dir/index.html

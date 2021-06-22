@@ -3,19 +3,12 @@
 
 ## Installation
 1. install [parsimonhi/animCJK](https://github.com/parsimonhi/animCJK)
-2. install [marmooo/ngram-idioms](https://github.com/marmooo/ngram-idioms)
-3. install [marmooo/sudachi-idioms](https://github.com/marmooo/sudachi-idioms)
-4. ```npm install```
+2. install [marmooo/graded-kanji-examples](https://github.com/marmooo/graded-kanji-examples) licensed under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ## Build
-1. ```node build.js```
-2. ```node build.sh```
-
-## References
-- [常用漢字表](https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kakuki/14/tosin02/index.html)
-
-## License
-CC BY-NC-SA 4.0
+```
+bash build.sh
+```
 
 ## Attribution
 - [parsimonhi/animCJK (kanji svg)](https://github.com/parsimonhi/animCJK) is licensed under the [Arphic Public License](https://www.freedesktop.org/wiki/Arphic_Public_License/).
