@@ -1,4 +1,4 @@
-var CACHE_NAME = '2021-06-26 08:43';
+var CACHE_NAME = '2021-06-28 09:05';
 var urlsToCache = [
   '/touch-shuji/',
   '/touch-shuji/index.js',
@@ -10,6 +10,7 @@ var urlsToCache = [
   '/touch-shuji/mp3/correct3.mp3',
   '/touch-shuji/mp3/incorrect1.mp3',
   '/touch-shuji/mp3/stupid5.mp3',
+  '/touch-shuji/favicon/original.svg',
   '/touch-shuji/signature_pad.umd.min.js',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
 ];
