@@ -575,15 +575,15 @@ function resizeTegakiContents(tegakiPads) {
     if (data.length > 0) {
       tegakiPad.maxWidth = maxWidth;
       if (prevCanvasSize < canvasSize) {
-        for (let i=0; i<data.length; i++) {
-          for (let j=0; j<data[i].length; j++) {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].length; j++) {
             data[i][j].x /= 2;
             data[i][j].y /= 2;
           }
         }
       } else {
-        for (let i=0; i<data.length; i++) {
-          for (let j=0; j<data[i].length; j++) {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].length; j++) {
             data[i][j].x /= 2;
             data[i][j].y /= 2;
           }
@@ -691,16 +691,16 @@ function getInclusionCount(tegakiImgData, tehonImgData) {
 function calcKakuScore(tegakiCount, tehonCount, inclusionCount) {
   // 線長を優遇し過ぎると ["未","末"], ["土","士"] の見分けができなくなる
   let lineScore = (1 - Math.abs((tehonCount - tegakiCount) / tehonCount));
-  if (lineScore > 1)lineScore = 1;
+  if (lineScore > 1) lineScore = 1;
   // 包含率を優遇し過ぎると ["一","つ"], ["二","＝"] の見分けができなくなる
   let inclusionScore = (tegakiCount - inclusionCount) / tegakiCount;
-  if (inclusionScore > 1)inclusionScore = 1;
+  if (inclusionScore > 1) inclusionScore = 1;
   // 100点が取れないので少しだけ採点を甘くする
   // 0.7x0.7x2=1 なので 70点くらいの綺麗さのものが 係数 2 で 100点になる
   let kakuScore = lineScore * inclusionScore * 100 * 3.0;
-  if (kakuScore < 0)kakuScore = 0;
-  if (kakuScore > 100)kakuScore = 100;
-  if (isNaN(kakuScore))kakuScore = 0;
+  if (kakuScore < 0) kakuScore = 0;
+  if (kakuScore > 100) kakuScore = 100;
+  if (isNaN(kakuScore)) kakuScore = 0;
   return kakuScore;
 }
 
@@ -724,28 +724,30 @@ function getKakuScores(tegakiData, object, kanjiId, kakusu) {
           markerContext.getImageData(0, 0, canvasSize, canvasSize).data;
         const kakuCount = countNoTransparent(kakuData);
         getTehonCanvas(object, kanjiId, kakusu, i + 1).then((tehonCanvas) => {
-          const tehonImgData =
-            tehonCanvas.getContext("2d").getImageData(
-              0,
-              0,
-              canvasSize,
-              canvasSize,
-            ).data;
+          const tehonImgData = tehonCanvas.getContext("2d").getImageData(
+            0,
+            0,
+            canvasSize,
+            canvasSize,
+          ).data;
           const tehonCount = countNoTransparent(tehonImgData);
 
           const inclusionCount = getInclusionCount(kakuData, tehonImgData);
-          const kakuScore = calcKakuScore(kakuCount, tehonCount, inclusionCount);
+          const kakuScore = calcKakuScore(
+            kakuCount,
+            tehonCount,
+            inclusionCount,
+          );
           resolve([kakuScore, tehonCount]);
         });
       } else {
         getTehonCanvas(object, kanjiId, kakusu, i + 1).then((tehonCanvas) => {
-          const tehonImgData =
-            tehonCanvas.getContext("2d").getImageData(
-              0,
-              0,
-              canvasSize,
-              canvasSize,
-            ).data;
+          const tehonImgData = tehonCanvas.getContext("2d").getImageData(
+            0,
+            0,
+            canvasSize,
+            canvasSize,
+          ).data;
           const tehonCount = countNoTransparent(tehonImgData);
           resolve([0, tehonCount]);
         });
