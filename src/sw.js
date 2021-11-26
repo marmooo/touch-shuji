@@ -1,4 +1,4 @@
-var CACHE_NAME = '2021-11-16 00:50';
+var CACHE_NAME = '2021-11-26 11:50';
 var urlsToCache = [
   "/touch-shuji/",
   "/touch-shuji/index.js",
@@ -11,8 +11,8 @@ var urlsToCache = [
   "/touch-shuji/mp3/incorrect1.mp3",
   "/touch-shuji/mp3/stupid5.mp3",
   "/touch-shuji/favicon/original.svg",
-  "/touch-shuji/signature_pad.umd.min.js",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
+  "https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js",
 ];
 
 self.addEventListener("install", function (event) {
