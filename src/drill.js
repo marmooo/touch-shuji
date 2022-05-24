@@ -55,6 +55,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext();
 const animCJKDir = "/animCJK";
 let kanjis = "";
+let level = 2;
 loadConfig();
 
 // function toKanji(kanjiId) {
@@ -111,6 +112,9 @@ function loadConfig() {
   }
   if (localStorage.getItem("hint") == 1) {
     document.getElementById("hint").textContent = "EASY";
+  }
+  if (localStorage.getItem("touch-shuji-level")) {
+    level = parseInt(localStorage.getItem("touch-shuji-level"));
   }
 }
 
@@ -688,6 +692,24 @@ function getInclusionCount(tegakiImgData, tehonImgData) {
   return inclusionCount;
 }
 
+function getScoringFactor(level) {
+  console.log(level);
+  switch (level) {
+    case 0:
+      return 0.5 ** 2;
+    case 1:
+      return 0.6 ** 2;
+    case 2:
+      return 0.7 ** 2;
+    case 3:
+      return 0.8 ** 2;
+    case 4:
+      return 0.9 ** 2;
+    default:
+      return 0.7 ** 2;
+  }
+}
+
 function calcKakuScore(tegakiCount, tehonCount, inclusionCount) {
   // 線長を優遇し過ぎると ["未","末"], ["土","士"] の見分けができなくなる
   let lineScore = (1 - Math.abs((tehonCount - tegakiCount) / tehonCount));
@@ -696,8 +718,7 @@ function calcKakuScore(tegakiCount, tehonCount, inclusionCount) {
   let inclusionScore = (tegakiCount - inclusionCount) / tegakiCount;
   if (inclusionScore > 1) inclusionScore = 1;
   // 100点が取れないので少しだけ採点を甘くする
-  // 0.7x0.7x2=1 なので 70点くらいの綺麗さのものが 係数 2 で 100点になる
-  let kakuScore = lineScore * inclusionScore * 100 * 2.0;
+  let kakuScore = lineScore * inclusionScore * 100 / getScoringFactor(level);
   if (kakuScore < 0) kakuScore = 0;
   if (kakuScore > 100) kakuScore = 100;
   if (isNaN(kakuScore)) kakuScore = 0;

@@ -41,10 +41,6 @@ const w9 = w9_.concat(w8);
 const gradeByKanjis = [w1_, w1_, w2_, w3_, w4_, w5_, w6_, w7_, w8_, w9_];
 // const grades = ["小1", "小1", "小2", "小3", "小4", "小5", "小6", "中2", "中3", "常用"];
 let grade = 4;
-if (localStorage.getItem("grade")) {
-  grade = parseInt(localStorage.getItem("grade"));
-  document.getElementById("gradeOption").options[grade - 1].selected = true;
-}
 loadConfig();
 
 function changeGrade() {
@@ -52,6 +48,11 @@ function changeGrade() {
   setProblems();
   setCleared();
   localStorage.setItem("grade", grade);
+}
+
+function changeLevel() {
+  const level = this.selectedIndex;
+  localStorage.setItem("touch-shuji-level", level);
 }
 
 function loadConfig() {
@@ -67,6 +68,14 @@ function toggleDarkMode() {
   } else {
     localStorage.setItem("darkMode", 1);
     document.documentElement.dataset.theme = "dark";
+  }
+  if (localStorage.getItem("grade")) {
+    grade = parseInt(localStorage.getItem("grade"));
+    document.getElementById("gradeOption").options[grade - 1].selected = true;
+  }
+  if (localStorage.getItem("touch-shuji-level")) {
+    const level = parseInt(localStorage.getItem("touch-shuji-level"));
+    document.getElementById("levelOption").options[level].selected = true;
   }
 }
 
@@ -151,6 +160,7 @@ document.getElementById("generateDrill").onclick = generateDrill;
 document.getElementById("testRemained").onclick = testRemained;
 document.getElementById("testCleared").onclick = testCleared;
 document.getElementById("gradeOption").onchange = changeGrade;
+document.getElementById("levelOption").onchange = changeLevel;
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key == "Enter") {
     const words = this.value;
