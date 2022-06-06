@@ -1,4 +1,4 @@
-var CACHE_NAME = "2022-05-24 10:00";
+var CACHE_NAME = "2022-06-06 09:40";
 var urlsToCache = [
   "/touch-shuji/",
   "/touch-shuji/index.js",
