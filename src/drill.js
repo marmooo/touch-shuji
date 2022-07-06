@@ -278,7 +278,7 @@ function getKakuPaths(contentDocument, kanjiId, pos) {
 }
 
 function getTehonCanvas(object, kanjiId, kakusu, kakuNo) {
-  return new Promise(function (resolve) {
+  return new Promise((resolve) => {
     const clonedContent = object.contentDocument.cloneNode(true);
     for (let j = 1; j <= kakusu; j++) {
       const kakuPaths = getKakuPaths(clonedContent, kanjiId, j);
@@ -295,7 +295,7 @@ function getTehonCanvas(object, kanjiId, kakusu, kakuNo) {
     const url = URL.createObjectURL(blob);
     const img = new Image();
     img.src = url;
-    img.onload = function () {
+    img.onload = () => {
       const canvas = document.createElement("canvas");
       canvas.width = canvasSize;
       canvas.height = canvasSize;
@@ -459,7 +459,7 @@ function setScoringButton(
   word,
 ) {
   const scoring = problemBox.shadowRoot.querySelector("#scoring");
-  scoring.addEventListener("click", function () {
+  scoring.addEventListener("click", () => {
     getProblemScores(tegakiPanel, tehonPanel, objects, tegakiPads).then(
       (scores) => {
         if (scores.every((score) => score >= 80)) {
@@ -516,7 +516,7 @@ function setEraser(tegakiPad, tegakiPanel, tehonPanel, object, kanjiId) {
   const currKanji = object.getRootNode().host;
   const kanjiPos = [...tegakiPanel.children].findIndex((x) => x == currKanji);
   tehonPanel.children[kanjiPos].shadowRoot.querySelector("#eraser").onclick =
-    function () {
+    () => {
       const data = tegakiPad.toData();
       if (data) {
         tegakiPad.clear();
@@ -604,7 +604,7 @@ function loadDrill(drill) {
     const pads = loadProblem(wordYomi);
     tegakiPads = tegakiPads.concat(pads);
   });
-  window.onresize = function () {
+  window.onresize = () => {
     prevCanvasSize = canvasSize;
     if (window.innerWidth >= 768) {
       canvasSize = 280;
@@ -833,7 +833,7 @@ function report() {
     playAudio(stupidAudio);
     document.getElementById("report").classList.add("d-none");
     document.getElementById("incorrectReport").classList.remove("d-none");
-    setTimeout(function () {
+    setTimeout(() => {
       document.getElementById("report").classList.remove("d-none");
       document.getElementById("incorrectReport").classList.add("d-none");
     }, 6000);
