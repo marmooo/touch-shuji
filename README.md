@@ -18,8 +18,6 @@ bash build.sh
 
 ## Attribution
 
-- [parsimonhi/animCJK (kanji svg)](https://github.com/parsimonhi/animCJK) is
-  licensed under the
-  [Arphic Public License](https://www.freedesktop.org/wiki/Arphic_Public_License/).
-- [parsimonhi/animCJK (kana svg)](https://github.com/parsimonhi/animCJK) is
-  licensed under the [LGPL-3.0](https://www.gnu.org/licenses/lgpl-3.0.html).
+- [parsimonhi/animCJK](https://github.com/parsimonhi/animCJK) is licensed under
+  the
+  [Arphic Public License](https://www.freedesktop.org/wiki/Arphic_Public_License/)
