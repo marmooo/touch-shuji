@@ -908,9 +908,3 @@ document.addEventListener("click", unlockAudio, {
   once: true,
   useCapture: true,
 });
-
-// disable troublesome iOS features
-// - double tap zoom
-document.ondblclick = (e) => {
-  e.preventDefault();
-};
