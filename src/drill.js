@@ -52,10 +52,10 @@ if (window.innerWidth > 768) {
 const animCJKDir = "/animCJK";
 const audioContext = new AudioContext();
 const audioBufferCache = {};
-loadAudio("stupid", "/touch-kanji/mp3/stupid5.mp3");
-loadAudio("correct", "/touch-kanji/mp3/correct3.mp3");
-loadAudio("correctAll", "/touch-kanji/mp3/correct1.mp3");
-loadAudio("incorrect", "/touch-kanji/mp3/incorrect1.mp3");
+loadAudio("stupid", "/touch-shuji/mp3/stupid5.mp3");
+loadAudio("correct", "/touch-shuji/mp3/correct3.mp3");
+loadAudio("correctAll", "/touch-shuji/mp3/correct1.mp3");
+loadAudio("incorrect", "/touch-shuji/mp3/incorrect1.mp3");
 let kanjis = "";
 let level = 2;
 loadConfig();
