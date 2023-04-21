@@ -186,47 +186,40 @@ function unlockAudio() {
   audioContext.resume();
 }
 
-customElements.define(
-  "problem-box",
-  class extends HTMLElement {
-    constructor() {
-      super();
-      const template = document.getElementById("problem-box").content.cloneNode(
-        true,
-      );
-      this.attachShadow({ mode: "open" }).appendChild(template);
+class ProblemBox extends HTMLElement {
+  constructor() {
+    super();
+    const template = document.getElementById("problem-box")
+      .content.cloneNode(true);
+    this.attachShadow({ mode: "open" }).appendChild(template);
+  }
+}
+customElements.define("problem-box", ProblemBox);
+
+class TehonBox extends HTMLElement {
+  constructor() {
+    super();
+    const template = document.getElementById("tehon-box")
+      .content.cloneNode(true);
+    this.attachShadow({ mode: "open" }).appendChild(template);
+  }
+}
+customElements.define("tehon-box", TehonBox);
+
+class TegakiBox extends HTMLElement {
+  constructor() {
+    super();
+    const template = document.getElementById("tegaki-box")
+      .content.cloneNode(true);
+    if (window.innerWidth > 768) {
+      const canvas = template.querySelector("canvas");
+      canvas.setAttribute("width", canvasSize);
+      canvas.setAttribute("height", canvasSize);
     }
-  },
-);
-customElements.define(
-  "tehon-box",
-  class extends HTMLElement {
-    constructor() {
-      super();
-      const template = document.getElementById("tehon-box").content.cloneNode(
-        true,
-      );
-      this.attachShadow({ mode: "open" }).appendChild(template);
-    }
-  },
-);
-customElements.define(
-  "tegaki-box",
-  class extends HTMLElement {
-    constructor() {
-      super();
-      const template = document.getElementById("tegaki-box").content.cloneNode(
-        true,
-      );
-      if (window.innerWidth > 768) {
-        const canvas = template.querySelector("canvas");
-        canvas.setAttribute("width", canvasSize);
-        canvas.setAttribute("height", canvasSize);
-      }
-      this.attachShadow({ mode: "open" }).appendChild(template);
-    }
-  },
-);
+    this.attachShadow({ mode: "open" }).appendChild(template);
+  }
+}
+customElements.define("tegaki-box", TegakiBox);
 
 function getKakusu(object, kanjiId) {
   const id = "z" + kanjiId + "d";
@@ -322,9 +315,9 @@ function toKanjiId(str) {
 function loadSVG(kanji, kanjiId, parentNode, pos, loadCanvas) {
   let box;
   if (loadCanvas) {
-    box = document.createElement("tegaki-box");
+    box = new TegakiBox();
   } else {
-    box = document.createElement("tehon-box");
+    box = new TehonBox();
   }
   const object = box.shadowRoot.querySelector("object");
   const dataUrl = `${animCJKDir}/${getKanjiDir(kanji, kanjiId)}/${kanjiId}.svg`;
@@ -522,7 +515,7 @@ function setDict(tehonPanel, object, kanji) {
 
 function loadProblem(wordYomi) {
   const [word, yomi] = wordYomi.split("|");
-  const problemBox = document.createElement("problem-box");
+  const problemBox = new ProblemBox();
   const shadow = problemBox.shadowRoot;
   const info = shadow.querySelector(".info");
   info.textContent = yomi;
