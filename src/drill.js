@@ -333,9 +333,7 @@ function loadSVG(kanji, kanjiId, parentNode, pos, loadCanvas) {
   object.setAttribute("data-id", kanjiId);
   object.setAttribute("data-pos", pos);
   if (loadCanvas) {
-    object.setAttribute("onload", "_initTegakiSVG(this)");
-  } else {
-    object.setAttribute("onload", "_initTehonSVG(this)");
+    object.onload = initTegakiSVG;
   }
   parentNode.appendChild(box);
   return object;
@@ -757,13 +755,11 @@ function removeAnimations(object) {
   });
 }
 
-function _initTegakiSVG(object) {
+function initTegakiSVG(event) {
+  const object = event.target;
   const kanjiId = object.dataset.id;
   removeAnimations(object);
   toggleStroke(object, kanjiId);
-}
-
-function _initTehonSVG(_object) {
 }
 
 function report() {
