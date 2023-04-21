@@ -49,11 +49,13 @@ if (window.innerWidth > 768) {
   canvasSize = 280;
   maxWidth = 8;
 }
-let correctAudio, incorrectAudio, correctAllAudio, stupidAudio;
-loadAudios();
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext();
 const animCJKDir = "/animCJK";
+const audioContext = new AudioContext();
+const audioBufferCache = {};
+loadAudio("stupid", "/touch-kanji/mp3/stupid5.mp3");
+loadAudio("correct", "/touch-kanji/mp3/correct3.mp3");
+loadAudio("correctAll", "/touch-kanji/mp3/correct1.mp3");
+loadAudio("incorrect", "/touch-kanji/mp3/incorrect1.mp3");
 let kanjis = "";
 let level = 2;
 loadConfig();
@@ -155,52 +157,33 @@ function toggleScroll() {
   }
 }
 
-function playAudio(audioBuffer, volume) {
-  const audioSource = audioContext.createBufferSource();
-  audioSource.buffer = audioBuffer;
+async function playAudio(name, volume) {
+  const audioBuffer = await loadAudio(name, audioBufferCache[name]);
+  const sourceNode = audioContext.createBufferSource();
+  sourceNode.buffer = audioBuffer;
   if (volume) {
     const gainNode = audioContext.createGain();
     gainNode.gain.value = volume;
     gainNode.connect(audioContext.destination);
-    audioSource.connect(gainNode);
-    audioSource.start();
+    sourceNode.connect(gainNode);
+    sourceNode.start();
   } else {
-    audioSource.connect(audioContext.destination);
-    audioSource.start();
+    sourceNode.connect(audioContext.destination);
+    sourceNode.start();
   }
+}
+
+async function loadAudio(name, url) {
+  if (audioBufferCache[name]) return audioBufferCache[name];
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+  audioBufferCache[name] = audioBuffer;
+  return audioBuffer;
 }
 
 function unlockAudio() {
   audioContext.resume();
-}
-
-function loadAudio(url) {
-  return fetch(url)
-    .then((response) => response.arrayBuffer())
-    .then((arrayBuffer) => {
-      return new Promise((resolve, reject) => {
-        audioContext.decodeAudioData(arrayBuffer, (audioBuffer) => {
-          resolve(audioBuffer);
-        }, (err) => {
-          reject(err);
-        });
-      });
-    });
-}
-
-function loadAudios() {
-  promises = [
-    loadAudio("/touch-shuji/mp3/correct3.mp3"),
-    loadAudio("/touch-shuji/mp3/incorrect1.mp3"),
-    loadAudio("/touch-shuji/mp3/correct1.mp3"),
-    loadAudio("/touch-shuji/mp3/stupid5.mp3"),
-  ];
-  Promise.all(promises).then((audioBuffers) => {
-    correctAudio = audioBuffers[0];
-    incorrectAudio = audioBuffers[1];
-    correctAllAudio = audioBuffers[2];
-    stupidAudio = audioBuffers[3];
-  });
 }
 
 customElements.define(
@@ -371,9 +354,9 @@ function showKanjiScore(
 ) {
   kanjiScore = Math.floor(kanjiScore);
   if (kanjiScore >= 80) {
-    playAudio(correctAudio);
+    playAudio("correct");
   } else {
-    playAudio(incorrectAudio);
+    playAudio("incorrect");
   }
   scoreObj.classList.remove("d-none");
   scoreObj.textContent = kanjiScore;
@@ -811,7 +794,7 @@ function report() {
   }
   score /= scores.length;
   if (score >= 80) {
-    playAudio(correctAllAudio);
+    playAudio("correctAll");
     let clearedKanjis = localStorage.getItem("touch-shuji");
     if (clearedKanjis) {
       kanjis.split("").forEach((kanji) => {
@@ -829,7 +812,7 @@ function report() {
       location.href = "/touch-shuji/";
     }, 3000);
   } else {
-    playAudio(stupidAudio);
+    playAudio("stupid");
     document.getElementById("report").classList.add("d-none");
     document.getElementById("incorrectReport").classList.remove("d-none");
     setTimeout(() => {
