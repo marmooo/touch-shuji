@@ -42,6 +42,8 @@ const dirNames = [
   "常用",
   "常用外",
 ];
+let kanjis = "";
+let level = 2;
 let prevCanvasSize;
 let canvasSize = 140;
 let maxWidth = 4;
@@ -56,8 +58,6 @@ loadAudio("stupid", "/touch-shuji/mp3/stupid5.mp3");
 loadAudio("correct", "/touch-shuji/mp3/correct3.mp3");
 loadAudio("correctAll", "/touch-shuji/mp3/correct1.mp3");
 loadAudio("incorrect", "/touch-shuji/mp3/incorrect1.mp3");
-let kanjis = "";
-let level = 2;
 loadConfig();
 
 // function toKanji(kanjiId) {
@@ -189,9 +189,12 @@ function unlockAudio() {
 class ProblemBox extends HTMLElement {
   constructor() {
     super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.adoptedStyleSheets = [globalCSS];
+
     const template = document.getElementById("problem-box")
       .content.cloneNode(true);
-    this.attachShadow({ mode: "open" }).appendChild(template);
+    this.shadowRoot.appendChild(template);
   }
 }
 customElements.define("problem-box", ProblemBox);
@@ -870,6 +873,19 @@ function scrollEvent(e) {
   }
 }
 
+function getGlobalCSS() {
+  let cssText = "";
+  for (const stylesheet of document.styleSheets) {
+    for (const rule of stylesheet.cssRules) {
+      cssText += rule.cssText;
+    }
+  }
+  const css = new CSSStyleSheet();
+  css.replaceSync(cssText);
+  return css;
+}
+
+const globalCSS = getGlobalCSS();
 initQuery();
 
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
