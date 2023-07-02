@@ -57,17 +57,7 @@ function changeLevel(event) {
 
 function loadConfig() {
   if (localStorage.getItem("darkMode") == 1) {
-    document.documentElement.dataset.theme = "dark";
-  }
-}
-
-function toggleDarkMode() {
-  if (localStorage.getItem("darkMode") == 1) {
-    localStorage.setItem("darkMode", 0);
-    delete document.documentElement.dataset.theme;
-  } else {
-    localStorage.setItem("darkMode", 1);
-    document.documentElement.dataset.theme = "dark";
+    document.documentElement.setAttribute("data-bs-theme", "dark");
   }
   if (localStorage.getItem("grade")) {
     grade = parseInt(localStorage.getItem("grade"));
@@ -76,6 +66,16 @@ function toggleDarkMode() {
   if (localStorage.getItem("touch-shuji-level")) {
     const level = parseInt(localStorage.getItem("touch-shuji-level"));
     document.getElementById("levelOption").options[level].selected = true;
+  }
+}
+
+function toggleDarkMode() {
+  if (localStorage.getItem("darkMode") == 1) {
+    localStorage.setItem("darkMode", 0);
+    document.documentElement.setAttribute("data-bs-theme", "light");
+  } else {
+    localStorage.setItem("darkMode", 1);
+    document.documentElement.setAttribute("data-bs-theme", "dark");
   }
 }
 

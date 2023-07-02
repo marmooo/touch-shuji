@@ -1,11 +1,9 @@
-var CACHE_NAME = "2023-06-24 10:16";
+var CACHE_NAME = "2023-07-03 00:00";
 var urlsToCache = [
   "/touch-shuji/",
   "/touch-shuji/index.js",
   "/touch-shuji/drill.js",
   "/touch-shuji/drill/",
-  "/touch-shuji/svg/eraser.svg",
-  "/touch-shuji/svg/dict.svg",
   "/touch-shuji/mp3/correct1.mp3",
   "/touch-shuji/mp3/correct3.mp3",
   "/touch-shuji/mp3/incorrect1.mp3",

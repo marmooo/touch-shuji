@@ -110,7 +110,7 @@ function getDictUrl(kanji) {
 
 function loadConfig() {
   if (localStorage.getItem("darkMode") == 1) {
-    document.documentElement.dataset.theme = "dark";
+    document.documentElement.setAttribute("data-bs-theme", "dark");
   }
   if (localStorage.getItem("hint") == 1) {
     document.getElementById("hint").textContent = "EASY";
@@ -120,13 +120,24 @@ function loadConfig() {
   }
 }
 
+// TODO: :host-context() is not supportted by Safari/Firefox now
 function toggleDarkMode() {
   if (localStorage.getItem("darkMode") == 1) {
     localStorage.setItem("darkMode", 0);
-    delete document.documentElement.dataset.theme;
+    document.documentElement.setAttribute("data-bs-theme", "light");
+    boxes.forEach((box) => {
+      [...box.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+        canvas.removeAttribute("style");
+      });
+    });
   } else {
     localStorage.setItem("darkMode", 1);
-    document.documentElement.dataset.theme = "dark";
+    document.documentElement.setAttribute("data-bs-theme", "dark");
+    boxes.forEach((box) => {
+      [...box.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+        canvas.setAttribute("style", "filter: invert(1) hue-rotate(180deg);");
+      });
+    });
   }
 }
 
@@ -202,9 +213,18 @@ customElements.define("problem-box", ProblemBox);
 class TehonBox extends HTMLElement {
   constructor() {
     super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.adoptedStyleSheets = [globalCSS];
+
     const template = document.getElementById("tehon-box")
       .content.cloneNode(true);
-    this.attachShadow({ mode: "open" }).appendChild(template);
+    this.shadowRoot.appendChild(template);
+
+    if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
+      [...this.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+        canvas.setAttribute("style", "filter: invert(1) hue-rotate(180deg);");
+      });
+    }
   }
 }
 customElements.define("tehon-box", TehonBox);
@@ -212,6 +232,9 @@ customElements.define("tehon-box", TehonBox);
 class TegakiBox extends HTMLElement {
   constructor() {
     super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.adoptedStyleSheets = [globalCSS];
+
     const template = document.getElementById("tegaki-box")
       .content.cloneNode(true);
     if (window.innerWidth > 768) {
@@ -219,7 +242,13 @@ class TegakiBox extends HTMLElement {
       canvas.setAttribute("width", canvasSize);
       canvas.setAttribute("height", canvasSize);
     }
-    this.attachShadow({ mode: "open" }).appendChild(template);
+    this.shadowRoot.appendChild(template);
+
+    if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
+      [...this.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+        canvas.setAttribute("style", "filter: invert(1) hue-rotate(180deg);");
+      });
+    }
   }
 }
 customElements.define("tegaki-box", TegakiBox);
@@ -322,6 +351,7 @@ function loadSVG(kanji, kanjiId, parentNode, pos, loadCanvas) {
   } else {
     box = new TehonBox();
   }
+  boxes.push(box);
   const object = box.shadowRoot.querySelector("object");
   const dataUrl = `${animCJKDir}/${getKanjiDir(kanji, kanjiId)}/${kanjiId}.svg`;
   object.setAttribute("alt", kanji);
@@ -885,6 +915,7 @@ function getGlobalCSS() {
   return css;
 }
 
+const boxes = [];
 const globalCSS = getGlobalCSS();
 initQuery();
 
