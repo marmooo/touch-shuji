@@ -126,7 +126,7 @@ function toggleDarkMode() {
     localStorage.setItem("darkMode", 0);
     document.documentElement.setAttribute("data-bs-theme", "light");
     boxes.forEach((box) => {
-      [...box.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+      [...box.shadowRoot.querySelectorAll("object, canvas")].forEach((canvas) => {
         canvas.removeAttribute("style");
       });
     });
@@ -134,7 +134,7 @@ function toggleDarkMode() {
     localStorage.setItem("darkMode", 1);
     document.documentElement.setAttribute("data-bs-theme", "dark");
     boxes.forEach((box) => {
-      [...box.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+      [...box.shadowRoot.querySelectorAll("object, canvas")].forEach((canvas) => {
         canvas.setAttribute("style", "filter: invert(1) hue-rotate(180deg);");
       });
     });
@@ -221,7 +221,7 @@ class TehonBox extends HTMLElement {
     this.shadowRoot.appendChild(template);
 
     if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
-      [...this.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+      [...this.shadowRoot.querySelectorAll("object")].forEach((canvas) => {
         canvas.setAttribute("style", "filter: invert(1) hue-rotate(180deg);");
       });
     }
@@ -245,7 +245,7 @@ class TegakiBox extends HTMLElement {
     this.shadowRoot.appendChild(template);
 
     if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
-      [...this.shadowRoot.querySelectorAll("canvas")].forEach((canvas) => {
+      [...this.shadowRoot.querySelectorAll("object, canvas")].forEach((canvas) => {
         canvas.setAttribute("style", "filter: invert(1) hue-rotate(180deg);");
       });
     }
@@ -906,8 +906,12 @@ function scrollEvent(e) {
 function getGlobalCSS() {
   let cssText = "";
   for (const stylesheet of document.styleSheets) {
-    for (const rule of stylesheet.cssRules) {
-      cssText += rule.cssText;
+    try {
+      for (const rule of stylesheet.cssRules) {
+        cssText += rule.cssText;
+      }
+    } catch {
+      // skip cross-domain issue (Google Fonts)
     }
   }
   const css = new CSSStyleSheet();
