@@ -64,25 +64,6 @@ loadConfig();
 //   return String.fromCodePoint(parseInt("0x" + kanjiId));
 // }
 
-// function fetchKanjiSVG(kanji, kanjiId) {
-//   return new Promise((resolve) => {
-//     fetch(
-//       animCJKDir + "/" + getKanjiDir(kanji, kanjiId) + "/" + kanjiId + ".svg",
-//     )
-//       .then((response) => response.text())
-//       .then((text) => {
-//         const parser = new DOMParser();
-//         return parser.parseFromString(text, "text/html");
-//       }).then((html) => {
-//         const kanji = html.getElementsByTagName("svg")[0];
-//         kanji.setAttribute("width", canvasSize);
-//         kanji.setAttribute("height", canvasSize);
-//         kanji.removeAttribute("id");
-//         resolve(html);
-//       });
-//   });
-// }
-
 function getGrade(str) {
   for (let grade = 1; grade < gradeByKanjis.length; grade++) {
     if (gradeByKanjis[grade].includes(str)) {
