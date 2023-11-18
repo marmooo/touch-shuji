@@ -9,7 +9,7 @@ const urlsToCache = [
   "/touch-shuji/mp3/incorrect1.mp3",
   "/touch-shuji/mp3/stupid5.mp3",
   "/touch-shuji/favicon/favicon.svg",
-  "https://cdn.jsdelivr.net/npm/signature_pad@4.1.6/dist/signature_pad.umd.min.js",
+  "https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js",
 ];
 
 self.addEventListener("install", (event) => {
