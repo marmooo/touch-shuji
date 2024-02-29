@@ -21,7 +21,7 @@ let level = 2;
 let prevCanvasSize;
 let canvasSize = 140;
 let maxWidth = 4;
-if (window.innerWidth > 768) {
+if (globalThis.innerWidth > 768) {
   canvasSize = 280;
   maxWidth = 8;
 }
@@ -175,7 +175,7 @@ class TegakiBox extends HTMLElement {
 
     const template = document.getElementById("tegaki-box")
       .content.cloneNode(true);
-    if (window.innerWidth > 768) {
+    if (globalThis.innerWidth > 768) {
       const canvas = template.querySelector("canvas");
       canvas.setAttribute("width", canvasSize);
       canvas.setAttribute("height", canvasSize);
@@ -411,7 +411,7 @@ function setScoringButton(
             const headerHeight = document.getElementById("header").offsetHeight;
             const top = next.getBoundingClientRect().top +
               document.documentElement.scrollTop - headerHeight;
-            window.scrollTo({ top: top, behavior: "smooth" });
+            globalThis.scrollTo({ top: top, behavior: "smooth" });
           }
         }
         // 点数があまりにも低いものは合格リストから除外
@@ -538,9 +538,9 @@ function loadDrill(drill) {
     const pads = loadProblem(wordYomi);
     tegakiPads = tegakiPads.concat(pads);
   });
-  window.onresize = () => {
+  globalThis.onresize = () => {
     prevCanvasSize = canvasSize;
-    if (window.innerWidth >= 768) {
+    if (globalThis.innerWidth >= 768) {
       canvasSize = 280;
       maxWidth = 8;
     } else {
@@ -555,7 +555,7 @@ function loadDrill(drill) {
 
 // 器用差の大きい低学年の採点が緩くなるよう太さを変える
 function setStrokeWidth(kakusu) {
-  if (window.innerWidth > 768) {
+  if (globalThis.innerWidth > 768) {
     return 20 + 12 / kakusu;
   } else {
     return 10 + 6 / kakusu;
