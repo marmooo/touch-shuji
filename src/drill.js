@@ -541,7 +541,7 @@ function loadDrill(drill) {
     const pads = loadProblem(wordYomi);
     tegakiPads = tegakiPads.concat(pads);
   });
-  globalThis.onresize = () => {
+  globalThis.addEventListener("resize", () => {
     prevCanvasSize = canvasSize;
     if (globalThis.innerWidth >= 768) {
       canvasSize = 280;
@@ -553,7 +553,7 @@ function loadDrill(drill) {
     if (prevCanvasSize != canvasSize) {
       resizeTegakiContents(tegakiPads);
     }
-  };
+  });
 }
 
 // 器用差の大きい低学年の採点が緩くなるよう太さを変える
