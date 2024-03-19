@@ -1,4 +1,4 @@
-const CACHE_NAME = "2024-03-13 09:40";
+const CACHE_NAME = "2024-03-19 10:20";
 const urlsToCache = [
   "/touch-shuji/",
   "/touch-shuji/index.js",
@@ -9,7 +9,6 @@ const urlsToCache = [
   "/touch-shuji/mp3/incorrect1.mp3",
   "/touch-shuji/mp3/stupid5.mp3",
   "/touch-shuji/favicon/favicon.svg",
-  "https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js",
 ];
 
 self.addEventListener("install", (event) => {
