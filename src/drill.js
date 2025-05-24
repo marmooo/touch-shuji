@@ -131,6 +131,10 @@ function createAudioContext() {
 }
 
 function unlockAudio() {
+  const uttr = new SpeechSynthesisUtterance("");
+  uttr.lang = "ja-JP";
+  speechSynthesis.speak(uttr);
+
   if (audioContext) {
     audioContext.resume();
   } else {
@@ -140,7 +144,7 @@ function unlockAudio() {
     loadAudio("correctAll", "/touch-shuji/mp3/correct1.mp3");
     loadAudio("incorrect", "/touch-shuji/mp3/incorrect1.mp3");
   }
-  document.removeEventListener("pointerdown", unlockAudio);
+  document.removeEventListener("click", unlockAudio);
   document.removeEventListener("keydown", unlockAudio);
 }
 
@@ -922,5 +926,5 @@ document.getElementById("hint").onclick = toggleHint;
 document.getElementById("toggleScroll").onclick = toggleScroll;
 document.getElementById("toggleVoice").onclick = toggleVoice;
 document.getElementById("reportButton").onclick = report;
-document.addEventListener("pointerdown", unlockAudio, { once: true });
+document.addEventListener("click", unlockAudio, { once: true });
 document.addEventListener("keydown", unlockAudio, { once: true });
