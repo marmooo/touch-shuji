@@ -839,7 +839,7 @@ function shuffle(array) {
 }
 
 async function fetchJson(grade) {
-  const response = fetch(`/touch-shuji/data/${grade + 1}.json`);
+  const response = await fetch(`/touch-shuji/data/${grade + 1}.json`);
   return await response.json();
 }
 
